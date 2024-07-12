@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ioc
+  datasource:
+    url: jdbc:mysql://${MYSQL_ADDRESS}:${MYSQL_PORT}/ioc
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  data:
+    redis:
+      host: ${REDIS_ADDRESS}
+      port: ${REDIS_PORT}
