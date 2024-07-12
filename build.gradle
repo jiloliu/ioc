@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.bogon'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
 	toolchain {
@@ -50,5 +50,14 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.register('buildDockerImage', Exec) {
+	dependsOn bootJar // 确保在构建Docker镜像之前构建JAR文件
+
+	commandLine"bash", "-c", "echo \$REGISTRY_PASSWORD | docker login --username=\$REGISTRY_USERNAME --password-stdin \$REGISTRY " +
+			"&& docker build -f Dockerfile -t \$REGISTRY/jiloliu/ioc:${version} . " +
+			"&& docker push \$REGISTRY/jiloliu/ioc:${version}"
+
 }
 
